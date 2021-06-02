@@ -1,7 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
 import {
-  Button, TextInput, StyleSheet,
+  Button,
+  TextInput,
+  StyleSheet,
   SafeAreaView,
   Text,
   TouchableOpacity,
@@ -18,8 +20,8 @@ import Constants from "expo-constants";
 import FormField from "../../core/FormField";
 import * as Yup from "yup";
 
-const image = require("../../../assets/images/blue.png");
-const logo = require("../../../assets/logo/logo-white.png");
+const image = require("../../../assets/images/background/2.png");
+const logo = require("../../../assets/logo/logo.png");
 
 export interface SignInFormValues {
   username: string;
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   content: {
+    marginTop:20,
     paddingHorizontal: 20,
     flex: 1,
   },
@@ -56,11 +59,15 @@ const styles = StyleSheet.create({
     width: 400,
     height: 200,
     resizeMode: "contain",
+    backgroundColor: 'red',
+    
+    marginTop: Constants.statusBarHeight + 80,
   },
   logo: {
+    flex: 1,
     padding: 1,
     alignSelf: "center",
-    marginTop: Constants.statusBarHeight + 80,
+    marginTop: Constants.statusBarHeight,
   },
   buttonLogin: {
     height: 50,
@@ -88,8 +95,7 @@ const styles = StyleSheet.create({
 });
 export const validationSchema = Yup.object().shape({
   userName: Yup.string().required("Nhập tên đăng nhập"),
-  password: Yup.string()
-    .required("Nhập mật khẩu")
+  password: Yup.string().required("Nhập mật khẩu"),
   // .min(6, "Password must have at least 6 characters"),
 });
 
@@ -97,7 +103,12 @@ export const SignInForm: React.FunctionComponent<Props> = ({
   onSubmit,
   loading,
 }) => {
-  const initialValues: SignInFormValues = { username: "truongbq", password: "Becon922002!@2", appCode: "venesa_crm", platform: "web" };
+  const initialValues: SignInFormValues = {
+    username: "truongbq",
+    password: "Becon922002!@2",
+    appCode: "venesa_crm",
+    platform: "web",
+  };
 
   return (
     // <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -127,10 +138,7 @@ export const SignInForm: React.FunctionComponent<Props> = ({
       <SafeAreaView style={styles.container}>
         <>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ImageBackground
-              source={image}
-              style={styles.imageBackground}
-            >
+            <ImageBackground source={image} style={styles.imageBackground}>
               <View style={styles.logo}>
                 <Image style={styles.stretch} source={logo} />
                 <View style={styles.textWrapper}>
@@ -146,9 +154,14 @@ export const SignInForm: React.FunctionComponent<Props> = ({
                   extraScrollHeight={150}
                 >
                   <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                    {({ handleChange, handleBlur, submitForm, values,
+                    {({
+                      handleChange,
+                      handleBlur,
+                      submitForm,
+                      values,
                       errors,
-                      touched, }) => (
+                      touched,
+                    }) => (
                       <View>
                         <FormField
                           field="username"
@@ -175,7 +188,8 @@ export const SignInForm: React.FunctionComponent<Props> = ({
                         />
                         <TouchableOpacity
                           onPress={submitForm}
-                          style={styles.buttonLogin} disabled={loading}
+                          style={styles.buttonLogin}
+                          disabled={loading}
                         >
                           <Text style={styles.buttonLoginText}>ĐĂNG NHẬP</Text>
                         </TouchableOpacity>
