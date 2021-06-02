@@ -10,13 +10,14 @@ export interface SignInPayload {
 }
 
 export interface SignInResponse {
-  userInfo: any;
+  data: any;
   errorCode: string;
   errorMessage: string;
 }
 
 const ACCESS_TOKEN_STORAGE_KEY = "accessToken";
 const CURRENT_USER = "user";
+const TOKEN_AUTHORIZATION = "user";
 
 export const getAccessToken = (): Promise<string | null> =>
   SecureStore.getItemAsync(ACCESS_TOKEN_STORAGE_KEY);
@@ -25,9 +26,16 @@ export const setAccessToken = (accessToken: string): Promise<void> => {
   return SecureStore.setItemAsync(ACCESS_TOKEN_STORAGE_KEY, accessToken);
 };
 
-export const setCurrentUser = (userInfo: string): Promise<void> => {
-  return SecureStore.setItemAsync(CURRENT_USER, userInfo);
+export const setCurrentUser = (data: string): Promise<void> => {
+  return SecureStore.setItemAsync(CURRENT_USER, data);
 };
+
+export const setAuthorization = (token: string): Promise<void> => {
+  return SecureStore.setItemAsync(TOKEN_AUTHORIZATION, token);
+};
+export const getAuthorization = (): Promise<string | null> =>
+  SecureStore.getItemAsync(TOKEN_AUTHORIZATION);
+
 
 export const signIn = async (
   payload: SignInPayload

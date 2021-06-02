@@ -6,6 +6,7 @@ import {
   signOut,
   setAccessToken,
   setCurrentUser,
+  setAuthorization
 } from "./service";
 
 type SignInFn = (payload: SignInPayload) => Promise<SignInResponse>;
@@ -23,6 +24,7 @@ export const useSignIn = (): UseSignIn => {
     const response = await signIn(payload);
     // await setAccessToken(response.accessToken);
     await setCurrentUser(JSON.stringify(response));
+    await setAuthorization(response.data.jwtToken)
     setData(response);
     setLoading(false);
     return response;
