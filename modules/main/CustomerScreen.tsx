@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   View,
   Text,
   FlatList,
+  TouchableHighlight
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FormField from "../core/FormField";
@@ -15,10 +16,130 @@ import {
   SearchCustomerRequest,
 } from "../core/services/customer.service";
 
+export class Customer {
+  customerId: any;
+  customerCode: any;
+  bravoCustomerCode: any;
+  branchId: any;
+  fullName: any;
+  // nickName;
+  // middleName;
+  // givenName;
+  // mobile;
+  // mobileOther;
+  // nationality;
+  // customerType;
+  // idCardNo;
+  // idCardDateOfIssue;
+  // idCardProvinceCode;
+  // idCardDistrictCode;
+  // idCardWardCode;
+  // idCardPlace;
+  // idCardAreaDetail;
+  // idCardAddress;
+  // citizenIdCardNo;
+  // citizenIdCardDateOfIssue;
+  // citizenIdCardProvinceCode;
+  // citizenIdCardDistrictCode;
+  // citizenIdCardWardCode;
+  // citizenIdCardAddress;
+  // citizenIdCardPlace;
+  // citizenIdCardAreaDetail;
+  // passportNo;
+  // passportDateOfIssue;
+  // passportPlace;
+  // passportProvinceCode;
+  // passportDistrictCode;
+  // passportWardCode;
+  // passportAreaDetail;
+  // passportAddress;
+  // drivingLicenseNo;
+  // drivingLicenseDateOfIssue;
+  // drivingLicensePlace;
+  // drivingLicenseProvinceCode;
+  // drivingLicenseDistrictCode;
+  // drivingLicenseWardCode;
+  // drivingLicenseAreaDetail;
+  // drivingLicenseAddress;
+  // birthday;
+  // yearOfBirth;
+  // noEmailAddress;
+  // emailAddress;
+  // emailAddressOther;
+  // gender;
+  // provinceCode;
+  // districtCode;
+  // wardCode;
+  // currentAreaDetail;
+  // currentAddress;
+  // otherAddress;
+  // saleConsultantId;
+  // saleConsultantCode;
+  // saleConsultantName;
+  // flowStaffId;
+  // flowStaffCode;
+  // flowStaffName;
+  // taxCode;
+  // maritalStatus;
+  // career;
+  // companyName;
+  // companyProvinceCode;
+  // companyDistrictCode;
+  // companyWardCode;
+  // companyAreaDetail;
+  // companyAddress;
+  // incomePerMonthly;
+  // jobPlace;
+  // academicLevel;
+  // vnsStaffCode;
+  // referenceCode;
+  // refererCustomerCode;
+  // refererStaffCode;
+  // cs2CustomerId;
+  // status;
+  // bravoGuid;
+  // deleted;
+  // createdDate;
+  // createdBy;
+  // updatedDate;
+  // updatedBy;
+  // militaryIdCardNo;
+  // militaryIdCardDateOfIssue;
+  // militaryIdCardPlace;
+  // militaryIdCardProvinceCode;
+  // militaryIdCardDistrictCode;
+  // militaryIdCardWardCode;
+  // militaryIdCardAreaDetail;
+  // militaryIdCardAddress;
+  // loyaltyRank;
+  // loyaltyAmount;
+  // // Điểm hiện tại
+  // activePoint;
+  // // Tổng điểm tích lũy
+  // totalEarnedPoint;
+  // // Tổng điểm đã sử dụng
+  // totalPointsUsed;
+  // // Tổng tiền tích lũy
+  // totalEarnedAmount;
+  // // Tổng tiền đã sử dụng loyalty
+  // totalPaymentAmount;
+  // desciption;
+  // mobileContact;
+  // mbsBalance: number;
+  // mbsTotalAccumulateBalance: number;
+  // mbsTotalPaymentAmount: number;
+  // mbsDepositAmount: number;
+  // centerShortName: string;
+  // coachStaffId;
+  // coachStaffCode;
+  // coachStaffName;
+}
+
 export const CustomerScreen = () => {
   const [searchKeyword, onChangeSearchKeyword] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
   const searchCustomer = async () => {
     const searchCustomerRequest: SearchCustomerRequest = {
@@ -28,10 +149,18 @@ export const CustomerScreen = () => {
       pageIndex: 1,
     };
     const response = await onSearchCustomer(searchCustomerRequest);
-    console.log("111111111111", response?.data.customerList);
     setData(response?.data.customerList);
-    console.log("22222222", data);
   };
+
+  const renderItem = ({ item }: { item: any }) => (
+    // <TouchableHighlight
+    //   onPress={() => setSelectedId(item.customerId)}>
+    <View style={styles.item}>
+      <Text style={styles.title}>{item.fullName}</Text>
+    </View>
+    // </TouchableHighlight>
+  );
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,14 +185,10 @@ export const CustomerScreen = () => {
         Nhập thông tin tìm kiếm theo SĐT/Mã định danh/Mã KH/Tên KH...
       </Text>
       <View style={styles.content}>
-        <FlatList style={styles.list}
-        data={data}
-        keyExtractor={item=>item.customerId}
-        renderItem={({item,index})  =>{
-            return <View>
-                <Text>{item.fullName}</Text>
-            </View>
-        }}/>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.customerId.toString()} />
       </View>
     </SafeAreaView>
   );
@@ -108,10 +233,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
-  list:{
-      flex: 1,
-      padding: 8
-  }
+  list: {
+    flex: 1,
+    padding: 8
+  },
+  title: {
+    fontSize: 32,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
 });
 
 export default CustomerScreen;
