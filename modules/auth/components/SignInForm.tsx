@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: 400,
     height: 200,
     resizeMode: "contain",
-    backgroundColor: 'red',
+    backgroundColor: '#fff',
     
     marginTop: Constants.statusBarHeight + 80,
   },
