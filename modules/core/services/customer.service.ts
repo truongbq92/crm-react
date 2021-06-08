@@ -30,6 +30,5 @@ export const onSearchCustomer = async (
   });
 
   const data = await response.json();
-  console.log("111111", data);
   return data;
 };

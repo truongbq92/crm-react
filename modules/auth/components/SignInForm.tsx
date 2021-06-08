@@ -39,9 +39,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: '#fff'
   },
   content: {
-    marginTop:20,
+    marginTop: 20,
     paddingHorizontal: 20,
     flex: 1,
   },
@@ -54,13 +55,14 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     // opacity: 1,
     justifyContent: "center",
+    position: 'absolute',
   },
   stretch: {
     width: 400,
     height: 200,
     resizeMode: "contain",
     backgroundColor: '#fff',
-    
+
     marginTop: Constants.statusBarHeight + 80,
   },
   logo: {
@@ -111,105 +113,83 @@ export const SignInForm: React.FunctionComponent<Props> = ({
   };
 
   return (
-    // <Formik initialValues={initialValues} onSubmit={onSubmit}>
-    //   {({ handleChange, handleBlur, submitForm, values }) => (
-    //     <View>
-    //       <TextInput
-    //         style={styles.input}
-    //         onChangeText={handleChange("username")}
-    //         onBlur={handleBlur("username")}
-    //         value={values.username}
-    //       />
-    //       <View style={styles.spacer} />
-    //       <TextInput
-    //         style={styles.input}
-    //         onChangeText={handleChange("password")}
-    //         onBlur={handleBlur("password")}
-    //         value={values.password}
-    //         secureTextEntry
-    //       />
-    //       <Button onPress={submitForm} title="Submit" disabled={loading} />
-    //     </View>
-    //   )}
-    // </Formik>
-
     <>
       <StatusBar style="light" />
-      <SafeAreaView style={styles.container}>
-        <>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ImageBackground source={image} style={styles.imageBackground}>
-              <View style={styles.logo}>
-                <Image style={styles.stretch} source={logo} />
-                <View style={styles.textWrapper}>
-                  {/* <Text style={styles.hiText}>Xin chào!</Text> */}
-                  {/* <Text style={styles.userText}>BUI QUANG TRUONG</Text> */}
-                </View>
-              </View>
-              <View style={styles.content}>
-                <KeyboardAwareScrollView
-                  style={styles.content}
-                  showsVerticalScrollIndicator={false}
-                  keyboardShouldPersistTaps="handled"
-                  extraScrollHeight={150}
-                >
-                  <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                    {({
-                      handleChange,
-                      handleBlur,
-                      submitForm,
-                      values,
-                      errors,
-                      touched,
-                    }) => (
-                      <View>
-                        <FormField
-                          field="username"
-                          autoCapitalize="words"
-                          values={values}
-                          touched={touched}
-                          errors={errors}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          placeholder="Tên đăng nhập"
-                          icon="user"
-                        />
+      <View style={styles.container}>
 
-                        <FormField
-                          field="password"
-                          secureTextEntry={true}
-                          values={values}
-                          touched={touched}
-                          errors={errors}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          placeholder="Mật khẩu"
-                          icon="lock"
-                        />
-                        <TouchableOpacity
-                          onPress={submitForm}
-                          style={styles.buttonLogin}
-                          disabled={loading}
-                        >
-                          <Text style={styles.buttonLoginText}>ĐĂNG NHẬP</Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </Formik>
-                </KeyboardAwareScrollView>
-                <View style={styles.footer}>
-                  <View style={styles.loginInfo}>
-                    <Text style={styles.loginInfoText}>
-                      Sử dụng tài khoản đăng nhập máy tính cá nhân để đăng nhập
-                      hệ thống CRM Mobile
-                    </Text>
-                  </View>
+        <Image source={image} style={styles.imageBackground}>
+
+        </Image>
+        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+        <View style={styles.logo}>
+          <Image style={styles.stretch} source={logo} />
+          <View style={styles.textWrapper}>
+            {/* <Text style={styles.hiText}>Xin chào!</Text> */}
+            {/* <Text style={styles.userText}>BUI QUANG TRUONG</Text> */}
+          </View>
+        </View>
+        <View style={styles.content}>
+          <KeyboardAwareScrollView
+            style={styles.content}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={150}
+          >
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+              {({
+                handleChange,
+                handleBlur,
+                submitForm,
+                values,
+                errors,
+                touched,
+              }) => (
+                <View>
+                  <FormField
+                    field="username"
+                    autoCapitalize="words"
+                    values={values}
+                    touched={touched}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    placeholder="Tên đăng nhập"
+                    icon="user"
+                  />
+
+                  <FormField
+                    field="password"
+                    secureTextEntry={true}
+                    values={values}
+                    touched={touched}
+                    errors={errors}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    placeholder="Mật khẩu"
+                    icon="lock"
+                  />
+                  <TouchableOpacity
+                    onPress={submitForm}
+                    style={styles.buttonLogin}
+                    disabled={loading}
+                  >
+                    <Text style={styles.buttonLoginText}>ĐĂNG NHẬP</Text>
+                  </TouchableOpacity>
                 </View>
-              </View>
-            </ImageBackground>
-          </TouchableWithoutFeedback>
-        </>
-      </SafeAreaView>
+              )}
+            </Formik>
+          </KeyboardAwareScrollView>
+          <View style={styles.footer}>
+            <View style={styles.loginInfo}>
+              <Text style={styles.loginInfoText}>
+                Sử dụng tài khoản đăng nhập máy tính cá nhân để đăng nhập
+                hệ thống CRM Mobile
+                    </Text>
+            </View>
+          </View>
+        </View>
+        {/* </TouchableWithoutFeedback> */}
+      </View>
     </>
   );
 };
