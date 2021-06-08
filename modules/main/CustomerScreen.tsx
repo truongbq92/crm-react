@@ -174,6 +174,7 @@ export const CustomerScreen = () => {
     </TouchableHighlight>
   );
   const toggleModal = ({ item }: { item: any }) => {
+    console.log(item)
     setSelectedCustomer(item);
     setModalVisible(true);
     <View style={styles.modal}>

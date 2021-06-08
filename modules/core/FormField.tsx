@@ -35,7 +35,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         onChangeText={handleChange(field)}
         onBlur={handleBlur(field)}
         placeholder={placeholder}
-        placeholderTextColor="#fff"
+        placeholderTextColor="#00bbd5"
         secureTextEntry={secureTextEntry}
         autoCapitalize={autoCapitalize || "none"}
       />
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   iconLock: {
-    color: "#fff",
+    color: "#00bbd5",
     position: "absolute",
     fontSize: 18,
     top: 16,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   buttonLogin: {
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#00bbd5",
+    backgroundColor: "#fff",
     justifyContent: "center",
     marginTop: 20,
   },
@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 30,
     fontSize: 20,
-    color: "#fff",
-    backgroundColor: "#00bbd5",
-    opacity: 0.5,
+    color: "#00bbd5",
+    backgroundColor: "#fff",
+    opacity: 1,
     textAlign: "center",
     textAlignVertical: "center",
   },

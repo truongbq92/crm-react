@@ -20,8 +20,8 @@ import Constants from "expo-constants";
 import FormField from "../../core/FormField";
 import * as Yup from "yup";
 
-const image = require("../../../assets/images/background/2.png");
-const logo = require("../../../assets/logo/logo.png");
+const image = require("../../../assets/images/background/4.png");
+const logo = require("../../../assets/logo/logo-white.png");
 
 export interface SignInFormValues {
   username: string;
@@ -38,13 +38,14 @@ interface Props {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     backgroundColor: '#fff'
   },
   content: {
     marginTop: 20,
     paddingHorizontal: 20,
     flex: 1,
+    backgroundColor: 'transparent',
   },
   textWrapper: {
     marginTop: 0,
@@ -53,16 +54,15 @@ const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
     resizeMode: "cover",
-    // opacity: 1,
     justifyContent: "center",
     position: 'absolute',
+    width: '100%',
   },
   stretch: {
     width: 400,
     height: 200,
     resizeMode: "contain",
-    backgroundColor: '#fff',
-
+    backgroundColor: 'transparent',
     marginTop: Constants.statusBarHeight + 80,
   },
   logo: {
@@ -85,10 +85,12 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: "center",
     paddingBottom: 10,
+    backgroundColor: 'transparent',
   },
   loginInfo: {
     flexDirection: "column",
     justifyContent: "space-between",
+    backgroundColor: 'transparent',
   },
   loginInfoText: {
     color: "#fff",
@@ -120,14 +122,16 @@ export const SignInForm: React.FunctionComponent<Props> = ({
         <Image source={image} style={styles.imageBackground}>
 
         </Image>
+
+        <Image style={styles.stretch} source={logo} />
         {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-        <View style={styles.logo}>
+        {/* <View style={styles.logo}>
           <Image style={styles.stretch} source={logo} />
           <View style={styles.textWrapper}>
-            {/* <Text style={styles.hiText}>Xin chào!</Text> */}
-            {/* <Text style={styles.userText}>BUI QUANG TRUONG</Text> */}
+            <Text style={styles.hiText}>Xin chào!</Text>
+            <Text style={styles.userText}>BUI QUANG TRUONG</Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.content}>
           <KeyboardAwareScrollView
             style={styles.content}
@@ -144,7 +148,9 @@ export const SignInForm: React.FunctionComponent<Props> = ({
                 errors,
                 touched,
               }) => (
-                <View>
+                <View style={{
+                  backgroundColor: 'transparent'
+                }}>
                   <FormField
                     field="username"
                     autoCapitalize="words"
