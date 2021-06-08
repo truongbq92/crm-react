@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
-    position: 'absolute',
-    width: '100%',
+    // position: 'absolute',
+    // width: '100%',
+    ...StyleSheet.absoluteFillObject
   },
   stretch: {
     width: 400,
@@ -119,12 +120,12 @@ export const SignInForm: React.FunctionComponent<Props> = ({
       <StatusBar style="light" />
       <View style={styles.container}>
 
-        <Image source={image} style={styles.imageBackground}>
+        <ImageBackground source={image} style={styles.imageBackground}>
 
-        </Image>
+        </ImageBackground>
 
         <Image style={styles.stretch} source={logo} />
-        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         {/* <View style={styles.logo}>
           <Image style={styles.stretch} source={logo} />
           <View style={styles.textWrapper}>
@@ -194,7 +195,7 @@ export const SignInForm: React.FunctionComponent<Props> = ({
             </View>
           </View>
         </View>
-        {/* </TouchableWithoutFeedback> */}
+        </TouchableWithoutFeedback>
       </View>
     </>
   );

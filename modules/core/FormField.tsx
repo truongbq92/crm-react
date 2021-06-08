@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#00bbd5",
     backgroundColor: "#fff",
-    opacity: 1,
+    opacity: 0.6,
     textAlign: "center",
     textAlignVertical: "center",
   },
