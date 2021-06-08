@@ -8,7 +8,7 @@ import {
   FlatList,
   TouchableHighlight,
   Button,
-  Image
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FormField from "../core/FormField";
@@ -17,13 +17,17 @@ import {
   onSearchCustomer,
   SearchCustomerRequest,
 } from "../core/services/customer.service";
-import Modal from 'react-native-modal';
+import Modal from "react-native-modal";
 import { StatusBar } from "expo-status-bar";
 
-export class Customer {
+const image = require("../../assets/images/background/1.jpg");
+
+const unknownAvatar = require("../../assets/images/avatar/unknown.png");
+
+export interface Customer {
   customerId: any;
   customerCode: any;
-  bravoCustomerCode: any;
+  // bravoCustomerCode: any;
   branchId: any;
   fullName: any;
   // nickName;
@@ -143,14 +147,14 @@ export const CustomerScreen = () => {
   const [searchKeyword, onChangeSearchKeyword] = useState("");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState("");
-  const [selectedCustomer, setSelectedCustomer] = useState({});
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
   const [isModalVisible, setModalVisible] = useState(false);
 
   const searchCustomer = async () => {
     const searchCustomerRequest: SearchCustomerRequest = {
       branchId: 11,
       customerInfo: searchKeyword,
-      pageSize: 10,
+      pageSize: 20,
       pageIndex: 1,
     };
     const response = await onSearchCustomer(searchCustomerRequest);
@@ -158,38 +162,40 @@ export const CustomerScreen = () => {
   };
 
   const renderItem = ({ item }: { item: any }) => (
-    <TouchableHighlight underlayColor={'transparent'}
-      onPress={() => toggleModal(item)}>
-
+    <TouchableHighlight
+      underlayColor={"transparent"}
+      onPress={() => (toggleModal(item), setSelectedCustomer(item))}
+    >
       <View style={styles.item}>
+        <View>
+          <Image source={unknownAvatar} style={styles.avatar}></Image>
+        </View>
         <View>
           <Text style={styles.fullName}>{item.fullName}</Text>
           <Text style={styles.customerCode}>Mã KH: {item.customerCode}</Text>
-          <View style={{ flexDirection: 'column'}}>
-            <Text style={styles.identifierCode}>Mã định danh: {item.idCardNo}</Text>
-            <Text style={styles.customerMobile}>SĐT: {item.mobile}</Text>
-          </View>
+          <Text style={styles.identifierCode}>
+            Mã định danh: {item.idCardNo}
+          </Text>
+          <Text style={styles.customerMobile}>SĐT: {item.mobile}</Text>
         </View>
       </View>
     </TouchableHighlight>
   );
-  const toggleModal = ({ item }: { item: any }) => {
-    console.log(item)
+  function toggleModal(item: Customer): void {
+    console.log("1", item);
     setSelectedCustomer(item);
     setModalVisible(true);
-    <View style={styles.modal}>
-      <Text>{selectedCustomer}</Text>
-
-    </View>
-  };
-
-
-  const image = require("../../assets/images/background/1.jpg");
+    console.log("2", selectedCustomer);
+  }
   return (
     <>
       <StatusBar style="light" />
       <View style={styles.container}>
-        <Image source={image} style={styles.imageBackground} blurRadius={80}></Image>
+        <Image
+          source={image}
+          style={styles.imageBackground}
+          blurRadius={80}
+        ></Image>
         {/* <View style={styles.form}> */}
 
         <TextInput
@@ -210,16 +216,23 @@ export const CustomerScreen = () => {
         {/* </View> */}
         <Text style={styles.infoSearchText}>
           Nhập thông tin tìm kiếm theo SĐT/Mã định danh/Mã KH/Tên KH...
-      </Text>
+        </Text>
         {/* <View style={styles.content}> */}
         <FlatList
-          contentContainerStyle={{ padding: 20, paddingTop: Constants.statusBarHeight || 42 }}
+          contentContainerStyle={{
+            padding: 20,
+            paddingTop: Constants.statusBarHeight || 42,
+          }}
           data={data}
           renderItem={renderItem}
-          keyExtractor={item => item.customerId.toString()} />
+          keyExtractor={(item) => item.customerId.toString()}
+        />
         {/* </View> */}
         <Modal isVisible={isModalVisible}>
-
+          <View style={styles.modal}>
+            {/* <Text>{selectedCustomer.fullName}</Text> */}
+          </View>
+          ;
           <Button title="Đóng" onPress={() => setModalVisible(false)} />
         </Modal>
       </View>
@@ -271,16 +284,15 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    padding: 8
+    padding: 8,
   },
   fullName: {
     fontSize: 16,
-    color: 'blue'
+    color: "#6600ff",
   },
   customerCode: {
     fontSize: 12,
     opacity: 0.8,
-    color: 'blue'
   },
   identifierCode: {
     fontSize: 10,
@@ -291,12 +303,11 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   item: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 20,
     marginBottom: 20,
     borderRadius: 12,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    // opacity: 0.8,
+    backgroundColor: "rgba(255,255,255,0.2)",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -307,11 +318,11 @@ const styles = StyleSheet.create({
   },
   modal: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     // borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -322,10 +333,17 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     // opacity: 1,
     justifyContent: "center",
-    position: 'absolute',
+    position: "absolute",
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginRight: 20,
+    backgroundColor: "white",
   },
 });
 
